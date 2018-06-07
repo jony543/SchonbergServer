@@ -1,0 +1,17 @@
+branch-defaults:
+  default:
+    environment: sadna-api
+    group_suffix: null
+global:
+  application_name: sadna-server
+  branch: null
+  default_ec2_keyname: null
+  default_platform: Node.js
+  default_region: eu-west-1
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-schonberglab
+  repository: null
+  sc: null
+  workspace_type: Application
