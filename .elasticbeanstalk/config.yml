@@ -2,6 +2,8 @@ branch-defaults:
   default:
     environment: sadna-api
     group_suffix: null
+  master:
+    environment: sadna-api
 global:
   application_name: sadna-server
   branch: null
