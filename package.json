@@ -11,8 +11,9 @@
     "yarn": "*"
   },
   "scripts": {
-    "precommit": "yarn lint",    
-    "start": "cross-env NODE_ENV=production pm2 start ./src/index.js",
+    "precommit": "yarn lint",        
+    "start": "cross-env NODE_ENV=production node ./node_modules/pm2/bin/pm2 start ./src/index.js --name SchonbergApp",
+    "poststart":  "node ./node_modules/pm2/bin/pm2 logs",
     "dev": "nodemon ./src/index.js",
     "lint": "eslint **/*.js --ignore-path .gitignore --ignore-pattern internals/scripts",
     "lint:fix": "yarn lint -- --fix",
