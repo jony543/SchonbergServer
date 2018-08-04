@@ -13,6 +13,7 @@ import { WelcomeComponent } from 'src/app/welcome/welcome.component';
 import {MatButtonModule} from '@angular/material/button';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { BlockRefresh } from 'src/app/services/blockRefresh.service';
+import { ThankyouComponent } from './thankyou/thankyou.component';
 
 const appRoutes: Routes = [
   { 
@@ -23,6 +24,10 @@ const appRoutes: Routes = [
   { 
     path: 'similarity-rank',
     redirectTo: 'similarity-rank/0',
+  },
+  { 
+    path: 'thankyou',
+    component: ThankyouComponent,
   },
   { 
     path: '',
@@ -36,7 +41,8 @@ const appRoutes: Routes = [
     AppComponent,
     WelcomeComponent,
     SimilarityRankComponent,
-    StimulusPlayerComponent
+    StimulusPlayerComponent,
+    ThankyouComponent
   ],
   imports: [
     RouterModule.forRoot(

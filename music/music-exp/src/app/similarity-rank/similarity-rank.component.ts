@@ -45,7 +45,7 @@ export class SimilarityRankComponent implements OnInit, OnDestroy {
    initialiseState() {
      this.isPlaying = false;
      
-     const isDebug: boolean = false;
+     const isDebug: boolean = true;
 
      this.listenedToPrime = false || isDebug;
      this.listenedTo1 = false || isDebug;
@@ -57,7 +57,7 @@ export class SimilarityRankComponent implements OnInit, OnDestroy {
 
    next() {
      if (this.experimentService.isLastTrial(this.trialId)) {
-       this.router.navigate(['/']);
+       this.router.navigate(['thankyou']);
      } else {
       this.router.navigate(['similarity-rank', this.trialId + 1 ]);
     }

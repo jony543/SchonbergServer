@@ -90,7 +90,7 @@ export class ExperimentService {
     }
 
     isLastTrial(id: number): boolean {
-        return id >= this.trials.length;
+        return id >= this.trials.length - 1;
     }
 }
 
