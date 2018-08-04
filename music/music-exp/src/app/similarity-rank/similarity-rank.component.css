@@ -1,0 +1,21 @@
+.two-stimuli-container {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .similarity-radio-group {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .similarity-radio-button {
+    margin: 15px;
+  }
+
+  .trial-number-container {
+      padding-left: 20px;
+      display: flex;
+      justify-content: left;
+  }

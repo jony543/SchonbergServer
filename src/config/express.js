@@ -10,6 +10,7 @@ const routes = require('../api/routes/v1');
 const { logs } = require('./vars');
 const strategies = require('./passport');
 const error = require('../api/middlewares/error');
+const path = require('path');
 
 /**
 * Express instance
@@ -45,6 +46,13 @@ passport.use('jwt', strategies.jwt);
 
 // mount api v1 routes
 app.use('/v1', routes);
+
+// setup music exp
+app.use('/music/stimuli', express.static(path.join(__dirname, '../../music/stimuli')));
+app.use('/music', express.static(path.join(__dirname, '../../music/music-exp/dist/music-exp')));
+app.get('/music/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../music/music-exp/dist/music-exp/index.html'));
+});
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);

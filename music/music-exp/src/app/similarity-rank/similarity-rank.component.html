@@ -1,0 +1,52 @@
+<div class="trial-number-container">
+  {{ trialId + 1}} / 7
+</div>
+<div>
+  <h3>:ראשית, קטע להאזנה בלבד</h3>
+  <stimulus-player title="" [stimulusType]="stimulusTypes.Prime" 
+          [disabled]="isPlaying || listenedToPrime" 
+          [maxPlays]="1"
+          (musicStarted)="isPlaying=true"
+          (musicOver)="isPlaying=false; listenedToPrime=true;"></stimulus-player>
+  <ng-container *ngIf="listenedToPrime">
+    <br/><br/><br/>
+    <h3>:כעת, האזינו לשני הקטעים שאת מידת הדמיון ביניהם תתבקשו לדרג</h3>
+    <div class="two-stimuli-container">
+        <stimulus-player style="margin: 0px 20px;" title="'קטע ב" [stimulusType]="stimulusTypes.Left"  
+          [disabled]="isPlaying" 
+          [maxPlays]="1"
+          (musicStarted)="isPlaying=true;"
+          (musicOver)="isPlaying=false; listenedTo1=true;"></stimulus-player>
+        <stimulus-player style="margin: 0px 20px;" title="'קטע א" [stimulusType]="stimulusTypes.Right" 
+        [disabled]="isPlaying" 
+        [maxPlays]="1"
+        (musicStarted)="isPlaying=true"
+        (musicOver)="isPlaying=false; listenedTo2=true;"></stimulus-player>  
+    </div>
+  <!-- </ng-container>
+  <ng-container *ngIf="listenedTo1 && listenedTo2"> -->
+    <br/><br/><br/><br/>
+    <h3>:'דרגו את מידת הדמיון בין קטע א' לקטע ב</h3>
+    <mat-radio-group
+      [disabled]="!listenedTo1 || !listenedTo2" 
+      class="similarity-radio-group" layout="row" 
+      [(ngModel)]="similarityRank">
+        מאוד לא דומה
+        <mat-radio-button 
+        *ngFor="let rank of similarityOptions"
+          class="similarity-radio-button"
+          [value]="rank"
+          [disabled]="!listenedTo1 || !listenedTo2"
+          (click)="similarityRank = (listenedTo1 && listenedTo2)? rank: ''; selectionMade = listenedTo1 && listenedTo2;">
+          {{rank}}
+        </mat-radio-button>
+        מאוד דומה
+      </mat-radio-group>
+      <br/><br/><br/>
+      <div>
+        <button mat-button [disabled]="!selectionMade" (click)=next()>
+          המשיכו לצעד הבא
+        </button>
+      </div>
+    </ng-container>
+</div>
