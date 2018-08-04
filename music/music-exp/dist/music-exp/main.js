@@ -595,20 +595,24 @@ var StimulusPlayerComponent = /** @class */ (function () {
     StimulusPlayerComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.paramsSubscription = this.route.params.subscribe(function (params) {
-            _this.sound && _this.sound.stop();
+            _this.initializeState();
             var trialId = +params['id']; // (+) converts string 'id' to a number
+            console.log("getting sound for trial " + trialId + " player id: " + _this.stimulusType.toString());
             _this.sound = _this.experimentService.getTrial(trialId).getStimulus(_this.stimulusType);
             _this.sound.on('end', _this.whenTheMusicIsOver);
+            console.log("sound " + _this.sound._src + " initialized for trial " + trialId + " player id: " + _this.stimulusType.toString());
             _this.timerSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["timer"])(100, 100).subscribe(function () {
                 if (_this.sound.playing()) {
                     _this.barButtonOptions.value = (_this.sound.seek() / _this.sound.duration()) * 100;
                 }
             });
         });
-        // this.sound = new Howl({
-        //   src: [this.soundSrc], // preload 
-        //   onend: this.whenTheMusicIsOver
-        // });
+    };
+    StimulusPlayerComponent.prototype.initializeState = function () {
+        this.sound && this.sound.stop();
+        this.playCount = 0;
+        this.barButtonOptions.value = 0;
+        this.barButtonOptions.active = false;
     };
     StimulusPlayerComponent.prototype.ngOnDestroy = function () {
         this.timerSubscription && this.timerSubscription.unsubscribe();

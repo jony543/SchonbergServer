@@ -59,12 +59,16 @@ export class StimulusPlayerComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {
-      this.sound && this.sound.stop();
+      this.initializeState();
       
       const trialId = +params['id']; // (+) converts string 'id' to a number
 
+      console.log("getting sound for trial " + trialId + " player id: " + this.stimulusType.toString());
+
       this.sound = this.experimentService.getTrial(trialId).getStimulus(this.stimulusType);
       this.sound.on('end', this.whenTheMusicIsOver);
+
+      console.log("sound " + this.sound._src + " initialized for trial " + trialId + " player id: " + this.stimulusType.toString());
 
       this.timerSubscription = timer(100, 100).subscribe(() => {
         if (this.sound.playing()) {
@@ -72,11 +76,14 @@ export class StimulusPlayerComponent implements OnInit, OnChanges, OnDestroy {
         }
       });
    });
+  }
 
-    // this.sound = new Howl({
-    //   src: [this.soundSrc], // preload 
-    //   onend: this.whenTheMusicIsOver
-    // });
+  initializeState() {
+    this.sound && this.sound.stop();
+    
+    this.playCount = 0;
+    this.barButtonOptions.value = 0;
+    this.barButtonOptions.active = false;
   }
 
   ngOnDestroy() {
