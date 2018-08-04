@@ -486,7 +486,7 @@ var SimilarityRankComponent = /** @class */ (function () {
     };
     SimilarityRankComponent.prototype.initialiseState = function () {
         this.isPlaying = false;
-        var isDebug = true;
+        var isDebug = false;
         this.listenedToPrime = false || isDebug;
         this.listenedTo1 = false || isDebug;
         this.listenedTo2 = false || isDebug;

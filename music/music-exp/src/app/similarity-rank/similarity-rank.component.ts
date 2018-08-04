@@ -45,7 +45,7 @@ export class SimilarityRankComponent implements OnInit, OnDestroy {
    initialiseState() {
      this.isPlaying = false;
      
-     const isDebug: boolean = true;
+     const isDebug: boolean = false;
 
      this.listenedToPrime = false || isDebug;
      this.listenedTo1 = false || isDebug;
