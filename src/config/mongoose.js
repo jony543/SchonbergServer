@@ -21,6 +21,8 @@ if (env === 'development') {
 * @returns {object} Mongoose connection
 * @public
 */
+console.log(`MongoDB URI: ${mongo.uri}`);
+
 exports.connect = () => {
   mongoose.connect(mongo.uri, {
     keepAlive: 1,

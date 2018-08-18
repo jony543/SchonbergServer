@@ -38,6 +38,14 @@ const userSchema = new mongoose.Schema({
     index: true,
     trim: true,
   },
+  age: {
+    type: Number,
+  },
+  gender: {
+    type: String,
+    maxlength: 10,
+    trim: true,
+  },
   services: {
     facebook: String,
     google: String,

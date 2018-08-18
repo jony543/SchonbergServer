@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core";
 import {Howl} from 'howler';
 import * as _ from 'lodash';
-import { Router, ActivatedRoute } from "@angular/router";
-import { OnInit } from "@angular/core";
-import { OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 
 const NUM_OF_DUMMY_TRIALS:number = 0;
@@ -63,9 +60,7 @@ export class ExperimentService {
 
     private paramsSubscription: Subscription;
 
-    constructor(
-        private route: ActivatedRoute, private router: Router
-    ) {
+    constructor() {
         // add theme and variations trials
         var trialTypeArray: Array<boolean> = _.shuffle(THEME_AND_VARIATIONS.map((x, i) => i % 2 == 0));
         THEME_AND_VARIATIONS.forEach((x, i) => {

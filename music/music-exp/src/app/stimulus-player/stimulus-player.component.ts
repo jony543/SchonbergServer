@@ -1,13 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Input } from '@angular/core';
+import {Input, Output, Component, OnInit, OnDestroy, OnChanges, EventEmitter, SimpleChange } from '@angular/core';
 import { ButtonOpts } from 'mat-progress-buttons';
 import {Howl} from 'howler';
-import { timer, Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
-import { Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
-import { OnChanges, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { timer } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { SimpleChange } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ExperimentService, StimulusType } from 'src/app/services/experiment.service';
 
@@ -87,6 +82,8 @@ export class StimulusPlayerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.sound && this.sound.stop();
+    
     this.timerSubscription && this.timerSubscription.unsubscribe();
     this.paramsSubscription && this.paramsSubscription.unsubscribe();
   }

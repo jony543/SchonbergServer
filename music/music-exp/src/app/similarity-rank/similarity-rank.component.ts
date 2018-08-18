@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { StimulusType, ExperimentService } from 'src/app/services/experiment.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'similarity-rank',
   templateUrl: './similarity-rank.component.html',
   styleUrls: ['./similarity-rank.component.css']
 })
-export class SimilarityRankComponent implements OnInit, OnDestroy {
+export class SimilarityRankComponent implements OnDestroy {
   isPlaying: boolean = false;
 
   listenedToPrime: boolean = false;
@@ -62,8 +61,4 @@ export class SimilarityRankComponent implements OnInit, OnDestroy {
       this.router.navigate(['similarity-rank', this.trialId + 1 ]);
     }
    }
-
-  ngOnInit() {
-  }
-
 }
