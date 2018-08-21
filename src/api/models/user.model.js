@@ -46,6 +46,10 @@ const userSchema = new mongoose.Schema({
     maxlength: 10,
     trim: true,
   },
+  experienceYears: {
+    type: Number,
+    default: 0,
+  },
   services: {
     facebook: String,
     google: String,
