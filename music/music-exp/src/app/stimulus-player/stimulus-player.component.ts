@@ -6,6 +6,12 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { ActivatedRoute } from '@angular/router';
 import { ExperimentService, StimulusType } from 'src/app/services/experiment.service';
 
+var SIMNULUS_TYPE_NAMES =  [
+  'Prime',
+  'Left',
+  'Right',
+]
+
 @Component({
   selector: 'stimulus-player',
   templateUrl: './stimulus-player.component.html',
@@ -61,7 +67,7 @@ export class StimulusPlayerComponent implements OnInit, OnChanges, OnDestroy {
       this.sound = this.experimentService.getTrial(trialId).getStimulus(this.stimulusType);
       this.sound.on('end', this.whenTheMusicIsOver);
 
-      console.log("sound " + this.sound._src + " initialized for trial " + trialId + " player id: " + this.stimulusType.toString());
+      console.log("sound " + this.sound._src + " initialized for trial " + trialId + " side: " + SIMNULUS_TYPE_NAMES[this.stimulusType]);
 
       this.timerSubscription = timer(100, 100).subscribe(() => {
         if (this.sound.playing()) {

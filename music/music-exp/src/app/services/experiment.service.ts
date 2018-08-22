@@ -69,23 +69,43 @@ export class ExperimentService {
     private paramsSubscription: Subscription;
 
     constructor(private http: HttpClient) {
-        // add theme and variations trials
-        var trialTypeArray: Array<boolean> = _.shuffle(THEME_AND_VARIATIONS.map((x, i) => i % 2 == 0));
-        THEME_AND_VARIATIONS.forEach((x, i) => {
-            this.trials.push(new Trial(x, trialTypeArray[i]));
+        var themAndVariatoins: Composition[] = _.shuffle(THEME_AND_VARIATIONS);
+        var dummyVariations: Composition[] = themAndVariatoins.splice(0, 3);
+        
+        if (Math.random() > 0.5) {
+            var temp = dummyVariations[0].stim1;
+            dummyVariations[0].stim1 = dummyVariations[1].stim1;
+            dummyVariations[1].stim1 = dummyVariations[2].stim1;
+            dummyVariations[2].stim1 = temp;
+        } else {
+            var temp = dummyVariations[0].stim2;
+            dummyVariations[0].stim2 = dummyVariations[1].stim2;
+            dummyVariations[1].stim2 = dummyVariations[2].stim2;
+            dummyVariations[2].stim2 = temp;
+        }
+
+        dummyVariations.forEach((v, i) => {
+            this.trials.push(new Trial(v, i % 2 == 0, true));
+        });
+        themAndVariatoins.forEach((v, i) => {
+            this.trials.push(new Trial(v, i % 2 == 0, false));
         });
 
+        // add theme and variations trials
+        // var trialTypeArray: Array<boolean> = themAndVariatoins.map((x, i) => i % 2 == 0);
+        // THEME_AND_VARIATIONS.forEach((x, i) => {
+        //     this.trials.push(new Trial(x, trialTypeArray[i]));
+        // });
+
         // add polonez trials
-        this.trials.push(new Trial(POLONEZ[0], false));
-        this.trials.push(new Trial(POLONEZ[1], true));
+        this.trials.push(new Trial(POLONEZ[0], false, false));
+        this.trials.push(new Trial(POLONEZ[1], true, false));
 
         this.trials = _.shuffle(this.trials)
 
-        // asdd dummy trials in the beginning and shuffle again 
-        for (var i = 0; i < NUM_OF_DUMMY_TRIALS; i++) {
-        }
-        if (NUM_OF_DUMMY_TRIALS > 0)
-            this.trials = _.shuffle(this.trials)
+        var trialsLog = this.trials.map(t => t.getResult());
+        console.log(trialsLog);
+        console.log(trialsLog.map(x => x.isDummy? '' : x.prime))
     }
 
     getTrial(id: number): Trial {
@@ -130,31 +150,39 @@ export class Trial {
     private prime: Howl;
     private stimuli: Array<Howl> = new Array<Howl>();
     
+    private primeSrc: string = "";
     private stim1Src: string = "";
     private stim2Src: string = "";
     private compositionId: number;
     private isPrime1Take: boolean;
+    private isDummy: boolean;
     
     public similarityRank: number;
 
     public getResult() {
         return {
             compositionId: this.compositionId,
+            prime: this.primeSrc.substring("stimuli/".length),
             stim1: this.stim1Src.substring("stimuli/".length),
             stim2: this.stim2Src.substring("stimuli/".length),
+            isDummy: this.isDummy,
             isPrime1Taken: this.isPrime1Take,
             similarityRank: this.similarityRank
         }
     }
 
-    constructor (composition: Composition, takePrime1: boolean) {
+    constructor (composition: Composition, takePrime1: boolean, isDummy: boolean) {
+        this.isDummy = isDummy;
+        this.isPrime1Take = takePrime1;
+        this.compositionId = composition.id;
+
+        this.primeSrc = (takePrime1) ? composition.prime1 : composition.prime2;
+
         this.prime = new Howl({
-            src: [ (takePrime1) ? composition.prime1 : composition.prime2],
+            src: [ this.primeSrc ],
             preload: true
           });
 
-        this.compositionId = composition.id;
-        
         // switch between input with chance probability
         if (Math.random() > 0.5) {
             this.stim1Src = composition.stim1;
