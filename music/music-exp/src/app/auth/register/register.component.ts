@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./register.css']
 })
 export class RegisterComponent {
-    loading = false;
+    isLoading = false;
 
     registerForm: FormGroup; 
 
@@ -25,7 +25,7 @@ export class RegisterComponent {
       }
     
     register() {
-        this.loading = true;
+        this.isLoading = true;
         var model = this.registerForm.getRawValue();
         console.log(model);
 
@@ -40,7 +40,7 @@ export class RegisterComponent {
                 },
                 error => {
                     console.error(error);
-                    this.loading = false;
+                    this.isLoading = false;
                 });
     }
 }

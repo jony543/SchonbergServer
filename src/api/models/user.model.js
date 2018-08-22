@@ -46,6 +46,16 @@ const userSchema = new mongoose.Schema({
     maxlength: 10,
     trim: true,
   },
+  lastExpReported: {
+    type: String,
+    maxlength: 128,
+    trim: true,
+    lowercase: true,
+  },
+  nResults: {
+    type: Number,
+    default: 0,
+  },
   isMusicalExp: {
     type: Boolean,
     default: false,
