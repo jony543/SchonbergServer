@@ -7,7 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StimulusPlayerComponent } from './stimulus-player/stimulus-player.component';
 import { MatProgressButtons } from 'mat-progress-buttons';
 import {MatRadioModule} from '@angular/material/radio';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -18,10 +18,15 @@ import { AuthGuard } from './auth/_guards/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './auth/_services/authentication.service';
-import { AlertService } from './auth/_services/alert.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/app/auth/_helpers/jwt.interceptor';
 import { RegisterComponent } from 'src/app/auth/register/register.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material';
+import {BidiModule} from '@angular/cdk/bidi';
+import { FinalSurveyComponent } from './final-survey/final-survey.component';
 
 const appRoutes: Routes = [
   { 
@@ -35,6 +40,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   { 
+    path: 'final-survey',      
+    component: FinalSurveyComponent,
+    canActivate: [AuthGuard]
+  },
+  { 
     path: 'thankyou',
     component: ThankyouComponent,
   },
@@ -43,11 +53,16 @@ const appRoutes: Routes = [
     component: RegisterComponent,
   },
   { 
+    path: 'login', 
+    component: LoginComponent,
+  },
+  { 
     path: '',
     component: WelcomeComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard]
   },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
     
 @NgModule({
@@ -58,7 +73,8 @@ const appRoutes: Routes = [
     StimulusPlayerComponent,
     ThankyouComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    FinalSurveyComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -73,13 +89,18 @@ const appRoutes: Routes = [
     MatRadioModule,
     MatButtonModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule ,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatInputModule,
+    BidiModule
   ],
   providers: [
     ExperimentService,  
     BlockRefresh, 
     AuthenticationService,
-    AlertService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

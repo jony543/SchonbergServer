@@ -13,12 +13,12 @@
     <h3>:כעת, האזינו לשני הקטעים שאת מידת הדמיון ביניהם תתבקשו לדרג</h3>
     <div class="two-stimuli-container">
         <stimulus-player style="margin: 0px 20px;" title="'קטע ב" [stimulusType]="stimulusTypes.Left"  
-          [disabled]="isPlaying" 
+          [disabled]="isPlaying || listenedTo1" 
           [maxPlays]="1"
           (musicStarted)="isPlaying=true;"
           (musicOver)="isPlaying=false; listenedTo1=true;"></stimulus-player>
         <stimulus-player style="margin: 0px 20px;" title="'קטע א" [stimulusType]="stimulusTypes.Right" 
-        [disabled]="isPlaying" 
+        [disabled]="isPlaying || listenedTo2" 
         [maxPlays]="1"
         (musicStarted)="isPlaying=true"
         (musicOver)="isPlaying=false; listenedTo2=true;"></stimulus-player>  
@@ -44,7 +44,7 @@
       </mat-radio-group>
       <br/><br/><br/>
       <div>
-        <button mat-button [disabled]="!selectionMade" (click)=next()>
+        <button mat-button [disabled]="!selectionMade || nextClicked" (click)=next()>
           המשיכו לצעד הבא
         </button>
       </div>

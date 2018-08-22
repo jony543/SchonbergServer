@@ -1,0 +1,10 @@
+.form-container {
+    display: flex;
+    margin-right: 20%;
+    margin-left: 20%;
+    flex-direction: column;
+}
+
+.form-container > * {
+    text-align: right;
+}

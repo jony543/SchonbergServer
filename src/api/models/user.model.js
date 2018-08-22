@@ -46,7 +46,23 @@ const userSchema = new mongoose.Schema({
     maxlength: 10,
     trim: true,
   },
-  experienceYears: {
+  isMusicalExp: {
+    type: Boolean,
+    default: false,
+  },
+  musicalExperience: {
+    type: Number,
+    default: 0,
+  },
+  isMusicalTheory: {
+    type: Boolean,
+    default: false,
+  },
+  theoryExperience: {
+    type: Number,
+    default: 0,
+  },
+  classicalMusicFreq: {
     type: Number,
     default: 0,
   },

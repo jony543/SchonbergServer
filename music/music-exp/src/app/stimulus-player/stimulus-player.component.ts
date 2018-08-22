@@ -47,7 +47,7 @@ export class StimulusPlayerComponent implements OnInit, OnChanges, OnDestroy {
     for (let propName in changes) {
       if (propName == 'disabled') {
         let changedProp = changes[propName];
-        this.barButtonOptions.disabled = changedProp.currentValue;
+        this.barButtonOptions.disabled = this.isMaxPlays() || changedProp.currentValue;
       }
     }    
   }
@@ -57,8 +57,6 @@ export class StimulusPlayerComponent implements OnInit, OnChanges, OnDestroy {
       this.initializeState();
       
       const trialId = +params['id']; // (+) converts string 'id' to a number
-
-      console.log("getting sound for trial " + trialId + " player id: " + this.stimulusType.toString());
 
       this.sound = this.experimentService.getTrial(trialId).getStimulus(this.stimulusType);
       this.sound.on('end', this.whenTheMusicIsOver);
@@ -92,11 +90,18 @@ export class StimulusPlayerComponent implements OnInit, OnChanges, OnDestroy {
     this.playCount += 1;
     this.musicOver.emit(this.playCount);
 
-    if (this.maxPlays == -1 || this.playCount < this.maxPlays)
+    if (!this.isMaxPlays())
       this.barButtonOptions.active = false;
   }
 
+  private isMaxPlays() {
+    return this.maxPlays != -1 && this.playCount >= this.maxPlays;
+  }
+
   play() {
+    if (this.isMaxPlays() || this.disabled || this.barButtonOptions.disabled || this.sound.playing())
+      return;
+
     this.barButtonOptions.active = true;
     this.soundId = this.sound.play();
     this.musicStarted.emit(this.playCount + 1);

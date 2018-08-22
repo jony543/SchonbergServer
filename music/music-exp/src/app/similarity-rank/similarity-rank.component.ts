@@ -19,6 +19,7 @@ export class SimilarityRankComponent implements OnDestroy {
   stimulusTypes: any;
 
   selectionMade: boolean = false;
+  nextClicked: boolean = false;
 
   similarityRank: number;
   similarityOptions: Array<number> = [1, 2, 3, 4, 5, 6, 7];
@@ -49,16 +50,31 @@ export class SimilarityRankComponent implements OnDestroy {
      this.listenedToPrime = false || isDebug;
      this.listenedTo1 = false || isDebug;
      this.listenedTo2 = false || isDebug;
-
+     this.nextClicked = false;
+     
      this.selectionMade = false;
      this.similarityRank = null;
    }
 
    next() {
-     if (this.experimentService.isLastTrial(this.trialId)) {
-       this.router.navigate(['thankyou']);
-     } else {
-      this.router.navigate(['similarity-rank', this.trialId + 1 ]);
+     this.nextClicked = true;
+     this.experimentService.setSimilarityRank(this.trialId, this.similarityRank)
+      .subscribe(
+        data => {
+            console.log('Report trial successful');
+            this.nextInternal();
+        },
+        error => {
+            console.error(error);
+            this.nextInternal();
+        });
     }
-   }
+
+    private nextInternal() {
+      if (this.experimentService.isLastTrial(this.trialId)) {
+        this.router.navigate(['final-survey']);
+      } else {
+       this.router.navigate(['similarity-rank', this.trialId + 1 ]);
+      }
+    }
 }
