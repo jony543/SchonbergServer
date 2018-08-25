@@ -13,6 +13,7 @@ export class FinalSurveyComponent {
 
   answer: string;
   comments: string;
+  familiarity: number;
 
   constructor( private http: HttpClient, private router: Router) {
    }
@@ -24,7 +25,8 @@ export class FinalSurveyComponent {
         stage: 0,
         data: {
           answer: this.answer,
-          comments: this.comments
+          comments: this.comments,
+          familiarity: this.familiarity
         }
     }).subscribe(
         data => {

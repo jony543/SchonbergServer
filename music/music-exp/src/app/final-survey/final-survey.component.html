@@ -16,6 +16,16 @@
         <textarea  [(ngModel)]="comments" matInput placeholder="הערות נוספות"></textarea>
     </mat-form-field>
     <br/>
+    <p>.(מהי מידת ההיכרות שלך עם הקטעים ששמעת בניסוי? (0 - בכלל  לא; 7 - מכיר היטב</p>
+    <mat-radio-group layout="row" [(ngModel)]="familiarity" dir="rtl">
+        <mat-radio-button 
+            *ngFor="let freq of [0, 1, 2, 3, 4, 5, 6, 7]"
+            [value]="freq" 
+            style="padding-left: 17px; padding-bottom: 10px;">
+            {{freq}}
+        </mat-radio-button>
+    </mat-radio-group>
+    <br>    
     <button  mat-raised-button color="primary" (click)=send()>
         המשיכו לשלב הבא    
     </button>
